@@ -12,15 +12,34 @@ def get_election_data():
     if response.status_code != 200:
         exit(0)
     data = json.loads(response.content)
-    for state in states:
-        key = f"20241105{state}0"
-        race_call_status = data[key]["raceCallStatus"]
-        if key not in last_status:
-            last_status[key] = race_call_status
-        elif last_status[key] != race_call_status:
-            print(state, "changed status!")
-            print(race_call_status, state)
-            last_status[key] = race_call_status
+    for key in data:
+        state = data[key]["statePostal"]
+        officeId = data[key]["officeID"]
+        officeName = data[key]["officeName"]
+        if "seatName" in data[key]:
+            seatName = data[key]["seatName"]
+        if officeId == "I":
+            tabulationStatus = data[key]["tabulationStatus"]
+            if key not in last_status:
+                last_status[key] = tabulationStatus
+            elif last_status[key] != tabulationStatus:
+                description = data[key]["description"]
+                print(f"{state} - {officeName} - {seatName}")
+                print(tabulationStatus)
+                print(description)
+                last_status[key] = tabulationStatus
+        else:
+            raceCallStatus = data[key]["raceCallStatus"]
+            if key not in last_status:
+                last_status[key] = raceCallStatus
+            elif last_status[key] != raceCallStatus:
+                if officeId == 'P' or officeId == 'G':
+                    print(f"{state} - {officeName}")
+                    print(raceCallStatus)
+                else:
+                    print(f"{state} - {officeName} - {seatName}")
+                    print(raceCallStatus)
+                last_status[key] = raceCallStatus
 
 while True:
     get_election_data()
