@@ -24,7 +24,7 @@ def printRaceInfo(state, officeName, seatName, status, description):
     p.textln(status)
     if description != None:
         p.textln(description)
-    p.textln("Date and time:", date_time)
+    p.textln(f"Date and time: {date_time}")
     p.cut()
 
 
