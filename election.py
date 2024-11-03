@@ -14,16 +14,19 @@ last_status = {
 p = Usb(0x0fe6,0x811e, 0, 0x81, 1)
 
 def printRaceInfo(state, officeName, seatName, status, description):
-    p.set_with_default(align = 'center')
-    now = datetime.now() # current date and time
-    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    p.set_with_default(align = 'center', double_width=True, double_height=True)
     if seatName == None:
         p.textln(f"{state} - {officeName}")
     else:
         p.textln(f"{state} - {officeName} - {seatName}")
+    
+    p.set_with_default(align = 'center')
     p.textln(status)
     if description != None:
         p.textln(description)
+    
+    now = datetime.now() # current date and time
+    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     p.textln(f"Date and time: {date_time}")
     p.cut()
 
