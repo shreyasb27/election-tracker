@@ -4,12 +4,9 @@ import time
 from escpos.printer import Usb
 from datetime import datetime
 
-states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 election_data_url = "https://interactives.apelections.org/election-results/data-live/2024-11-05/results/national/metadata.json"
 
-last_status = {
-    "20241105AK0": "Arkansas"
-}
+last_status = {}
 
 p = Usb(0x0fe6,0x811e, 0, 0x81, 1)
 
@@ -61,4 +58,4 @@ def get_election_data():
 
 while True:
     get_election_data()
-    time.sleep(5 * 60)
+    time.sleep(1 * 60)
